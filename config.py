@@ -27,7 +27,9 @@ def init():
         'yyuid': 0,
         'udb_n': '',
         'illegal_danmu': ['王者', '.com', '.cn', '奶', '爱', '房管'],
-        'filter_sender': ['黑白小调', '晴宝【浣熊下分私】', '小芒果【进浣熊群】']
+        'filter_sender': ['黑白小调', '晴宝【浣熊下分私】', '小芒果【进浣熊群】'],
+        'headers': {
+            'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Mobile Safari/537.36'}
     }
 
 

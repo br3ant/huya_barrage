@@ -235,11 +235,8 @@ def handle_else(data):
 
 
 async def block_when_room_open(room_id):
-    headers = {
-        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Mobile Safari/537.36'}
-
     while True:
-        result = requests.get(f'https://m.huya.com/{room_id}', headers=headers).text
+        result = requests.get(f'https://m.huya.com/{room_id}', headers=config.get('headers')).text
         # print(result)
         on_live = 'var ISLIVE = true;'
         if on_live in result:

@@ -4,6 +4,8 @@ import re
 import sys
 import urllib.parse
 
+import requests
+
 from huya_login import HuyaDriver
 from tars.models import *
 
@@ -33,21 +35,4 @@ def unescape(string):
 
 
 if __name__ == '__main__':
-    text = "哈哈哈999"
-    # print(text)
-    #
-    # print(html.unescape(urllib.parse.quote("哈哈哈")))
-    # text = "哈哈哈".encode('unicode-escape').decode()
-    # print(len(text))
-    # print(text)
-    print(str.encode(text))
-    # print(str.encode(text).decode('utf-8'))
-
-    out_steam = tarscore.TarsOutputStream()
-    out_steam.write(tarscore.string, 0, text)
-    print(out_steam.getBuffer())
-
-    in_steam = tarscore.TarsInputStream(out_steam.getBuffer())
-    result = in_steam.read(tarscore.string, 0, True)
-
-    print(result)
+    print(requests.get('https://m.huya.com/520666',config.get('headers')).text)
