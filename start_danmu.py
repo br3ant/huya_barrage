@@ -236,14 +236,24 @@ def handle_else(data):
 
 async def block_when_room_open(room_id):
     while True:
-        result = requests.get(f'https://m.huya.com/{room_id}', headers=config.get('headers')).text
-        # print(result)
-        on_live = 'var ISLIVE = true;'
-        if on_live in result:
+        if is_room_open(room_id):
             return
         else:
             print('主播未上线')
             await asyncio.sleep(5 * 60)
+
+
+async def stop_when_room_close(room_id):
+    while True:
+        await asyncio.sleep(5 * 60)
+        if not is_room_open(room_id):
+            logger.info('退出')
+            exit()
+
+
+def is_room_open(room_id):
+    result = requests.get(f'https://m.huya.com/{room_id}', headers=config.get('headers')).text
+    return 'var ISLIVE = true;' in result
 
 
 def read_cookies():
@@ -290,6 +300,7 @@ async def main():
     asyncio.create_task(receive_danmu(q, barrage_queue))
     asyncio.create_task(time_danmu(barrage_queue))
     asyncio.create_task(send_barrage(dmc, barrage_queue))
+    asyncio.create_task(stop_when_room_close(room_id))
 
     await dmc.start()
 
