@@ -4,8 +4,6 @@ import re
 import sys
 import urllib.parse
 
-import requests
-
 from huya_login import HuyaDriver
 from tars.models import *
 
@@ -35,4 +33,6 @@ def unescape(string):
 
 
 if __name__ == '__main__':
-    print(requests.get('https://m.huya.com/520666',config.get('headers')).text)
+    while True:
+        print("11111")
+        time.sleep(1)
