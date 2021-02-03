@@ -243,12 +243,12 @@ async def block_when_room_open(room_id):
             await asyncio.sleep(5 * 60)
 
 
-async def stop_when_room_close(room_id):
+async def stop_when_room_close(room_id, dmc: DanmakuClient):
     while True:
         await asyncio.sleep(5 * 60)
         if not is_room_open(room_id):
             logger.info('退出')
-            exit()
+            await dmc.stop()
 
 
 def is_room_open(room_id):
@@ -300,7 +300,7 @@ async def main():
     asyncio.create_task(receive_danmu(q, barrage_queue))
     asyncio.create_task(time_danmu(barrage_queue))
     asyncio.create_task(send_barrage(dmc, barrage_queue))
-    asyncio.create_task(stop_when_room_close(room_id))
+    asyncio.create_task(stop_when_room_close(room_id, dmc))
 
     await dmc.start()
 

@@ -5,7 +5,6 @@ import sys
 import urllib.parse
 
 from huya_login import HuyaDriver
-from tars.models import *
 
 
 def get_cookies():
@@ -32,7 +31,3 @@ def unescape(string):
     return re.sub(r'%u([a-fA-F0-9]{4}|[a-fA-F0-9]{2})', lambda m: chr(int(m.group(1), 16)), quoted)
 
 
-if __name__ == '__main__':
-    while True:
-        print("11111")
-        time.sleep(1)

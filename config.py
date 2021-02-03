@@ -21,7 +21,7 @@ def init():
             '粉丝群': '9，11，13级牌子联系贵宾榜小芒果',
         },
         'match_danmu_tick': 10,
-        'time_danmu_tick': 60 * 2,
+        'time_danmu_tick': 60,
         'cookie_path': './cookie/cookies.pkl',
         'cookie': '',
         'yyuid': 0,
