@@ -28,7 +28,7 @@ class HuyaDriver:
         elif platform.system() == 'Darwin':
             executable_path = './mac/chromedriver'
         elif platform.system() == 'Linux':
-            executable_path = './linux/geckodriver'
+            executable_path = './linux/chromedriver'
         else:
             executable_path = ''
         self.driver = webdriver.Chrome(executable_path=executable_path, chrome_options=options)
