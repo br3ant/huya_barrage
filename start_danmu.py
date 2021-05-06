@@ -9,6 +9,7 @@ from analysis_danmu import analyze_bytes
 from barrage_logger import logger
 from client import DanmakuClient
 from tars.models import *
+from utils.print_log import print_red
 
 last_send_s = time.time()
 is_login = False
@@ -62,7 +63,7 @@ async def receive_danmu(q, barrage_queue):
                         newdata = bs.read(tarscore.mapclass(tarscore.string, tarscore.bytes), 0, True)
                         rsps = tarscore.TarsInputStream(newdata.get('tRsp'))
                         rsp = rsps.read(SendMessageRsp, 0, True)
-                        print(
+                        print_red(
                             f'SendMessageRsp iStatus = {rsp.iStatus} sToast={rsp.sToast} UserInfo = {rsp.tNotice.tUserInfo.sNickName} Content = {rsp.tNotice.sContent} ')
             except:
                 with open('log.txt', 'a+') as f:
