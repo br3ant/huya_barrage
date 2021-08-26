@@ -8,9 +8,9 @@
 
 ### Todo
 
-1. token登陆易过期,寻找一次登陆到期自动刷新的机制
-2. 主播上下线通过轮询,待优化
-3. 监听礼物消息未破解完,现在只能破解全系统礼物
+- [ ] token登陆易过期,寻找一次登陆到期自动刷新的机制
+- [ ] 主播上下线通过轮询,待优化
+- [ ] 监听礼物消息未破解完,现在只能破解全系统礼物
 
 ### 运行
 
@@ -22,8 +22,8 @@
 ### 注意事项
 
 chromedriver驱动程序版本和电脑的chrome版本一定要一致
-chromedriver下载地址 http://npm.taobao.org/mirrors/chromedriver
-chrome版本:右上角三个点->帮助->关于
+- [chromedriver下载地址](http://npm.taobao.org/mirrors/chromedriver) 
+- chrome版本:右上角三个点->帮助->关于
 
 
 ## 免责声明：仅学习使用，如有侵权，请联系本人删除（1106617567@qq.com）
