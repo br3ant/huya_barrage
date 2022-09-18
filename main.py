@@ -1,23 +1,19 @@
+import argparse
 import sys
 
 import config
 from huya_login import HuyaDriver
 from start_danmu import start
 
-message = """
-    功能列表：                                                                                
-    1.获取cookies
-    2.开启弹幕
-    """
-print(message)
-choice_function = input('请选择:')
+parser = argparse.ArgumentParser()
 
-if choice_function == '1':
+parser.add_argument("--login", "-l", default=False, action="store_true",
+                    help="login for cookies")
+
+options = parser.parse_args(sys.argv[1:])
+if options.login:
     room_id = config.get('room_id')
     driver = HuyaDriver(room_id)
-    driver.colse()
-elif choice_function == '2':
-    start()
+    driver.close()
 else:
-    print('没有此功能')
-    sys.exit(1)
+    start()

@@ -1,14 +1,15 @@
 import asyncio
 import os
 import pickle
+import re
 from datetime import datetime
 
 import requests
 
 from analysis_danmu import analyze_bytes
-from barrage_logger import logger
-from client import DanmakuClient
+from client import BarrageClient
 from tars.models import *
+from utils.barrage_logger import logger
 from utils.print_log import print_red
 
 last_send_s = time.time()
@@ -17,7 +18,7 @@ last_danmu = ''
 
 
 # 平滑发动弹幕
-async def send_barrage(dmc: DanmakuClient, barrage_queue):
+async def send_barrage(dmc: BarrageClient, barrage_queue):
     while True:
         barrage = await barrage_queue.get()
         await dmc.send_barrage(barrage)
@@ -244,7 +245,7 @@ async def block_when_room_open(room_id):
             await asyncio.sleep(5 * 60)
 
 
-async def stop_when_room_close(room_id, dmc: DanmakuClient):
+async def stop_when_room_close(room_id, dmc: BarrageClient):
     while True:
         await asyncio.sleep(5 * 60)
         if not is_room_open(room_id):
@@ -253,8 +254,16 @@ async def stop_when_room_close(room_id, dmc: DanmakuClient):
 
 
 def is_room_open(room_id):
-    result = requests.get(f'https://m.huya.com/{room_id}', headers=config.get('headers')).text
-    return 'var ISLIVE = true;' in result
+    room_page = requests.get(f'https://m.huya.com/{room_id}', headers=config.get('headers')).text
+
+    m = re.search(r"lYyid\":([0-9]+)", room_page, re.MULTILINE)
+    ayyuid = m.group(1)
+    m = re.search(r"lChannelId\":([0-9]+)", room_page, re.MULTILINE)
+    tid = m.group(1)
+    m = re.search(r"lSubChannelId\":([0-9]+)", room_page, re.MULTILINE)
+    sid = m.group(1)
+
+    return ayyuid is not None and tid is not None and sid is not None
 
 
 def read_cookies():
@@ -297,7 +306,7 @@ async def main():
     q = asyncio.Queue()
     barrage_queue = asyncio.Queue()
 
-    dmc = DanmakuClient(f'https://www.huya.com/{room_id}', q)
+    dmc = BarrageClient(f'https://www.huya.com/{room_id}', q)
     asyncio.create_task(receive_danmu(q, barrage_queue))
     asyncio.create_task(time_danmu(barrage_queue))
     asyncio.create_task(send_barrage(dmc, barrage_queue))

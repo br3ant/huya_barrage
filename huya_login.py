@@ -76,7 +76,7 @@ class HuyaDriver:
 
         # 这个时候我们用二维码登录，设置最多等待3分钟，如果登录那个区域是可见的，就登录成功
         WebDriverWait(self.driver, 180).until(
-            EC.visibility_of_element_located((By.XPATH, '//*[@id="login-userAvatar"]')))
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="J_duyaHeaderRight"]/div/div[2]/a/img')))
 
         print("登录成功")
         # 保存cookie到cookies.pkl文件
@@ -132,7 +132,7 @@ class HuyaDriver:
             EC.element_to_be_clickable((By.XPATH, '//*[@id="msg_send_bt"]'))).click()
         print(f'发送成功 message = {message}')
 
-    def colse(self):
+    def close(self):
         self.driver.close()
 
 
